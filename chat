@@ -1,0 +1,180 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "e84892d7-655f-4829-9333-2ac69cf8d3f4",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: google-generativeai in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (0.8.5)\n",
+      "Requirement already satisfied: google-ai-generativelanguage==0.6.15 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-generativeai) (0.6.15)\n",
+      "Requirement already satisfied: google-api-core in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-generativeai) (2.28.1)\n",
+      "Requirement already satisfied: google-api-python-client in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-generativeai) (2.187.0)\n",
+      "Requirement already satisfied: google-auth>=2.15.0 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-generativeai) (2.43.0)\n",
+      "Requirement already satisfied: protobuf in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-generativeai) (5.29.5)\n",
+      "Requirement already satisfied: pydantic in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-generativeai) (2.12.4)\n",
+      "Requirement already satisfied: tqdm in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-generativeai) (4.67.1)\n",
+      "Requirement already satisfied: typing-extensions in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-generativeai) (4.15.0)\n",
+      "Requirement already satisfied: proto-plus<2.0.0dev,>=1.22.3 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-ai-generativelanguage==0.6.15->google-generativeai) (1.26.1)\n",
+      "Requirement already satisfied: googleapis-common-protos<2.0.0,>=1.56.2 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-api-core->google-generativeai) (1.72.0)\n",
+      "Requirement already satisfied: requests<3.0.0,>=2.18.0 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-api-core->google-generativeai) (2.32.5)\n",
+      "Requirement already satisfied: grpcio<2.0.0,>=1.33.2 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.10.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,<3.0.0dev,>=1.34.1->google-ai-generativelanguage==0.6.15->google-generativeai) (1.76.0)\n",
+      "Requirement already satisfied: grpcio-status<2.0.0,>=1.33.2 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.10.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,<3.0.0dev,>=1.34.1->google-ai-generativelanguage==0.6.15->google-generativeai) (1.71.2)\n",
+      "Requirement already satisfied: cachetools<7.0,>=2.0.0 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-auth>=2.15.0->google-generativeai) (6.2.2)\n",
+      "Requirement already satisfied: pyasn1-modules>=0.2.1 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-auth>=2.15.0->google-generativeai) (0.4.2)\n",
+      "Requirement already satisfied: rsa<5,>=3.1.4 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-auth>=2.15.0->google-generativeai) (4.9.1)\n",
+      "Requirement already satisfied: charset_normalizer<4,>=2 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from requests<3.0.0,>=2.18.0->google-api-core->google-generativeai) (3.4.4)\n",
+      "Requirement already satisfied: idna<4,>=2.5 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from requests<3.0.0,>=2.18.0->google-api-core->google-generativeai) (3.11)\n",
+      "Requirement already satisfied: urllib3<3,>=1.21.1 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from requests<3.0.0,>=2.18.0->google-api-core->google-generativeai) (2.5.0)\n",
+      "Requirement already satisfied: certifi>=2017.4.17 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from requests<3.0.0,>=2.18.0->google-api-core->google-generativeai) (2025.11.12)\n",
+      "Requirement already satisfied: pyasn1>=0.1.3 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from rsa<5,>=3.1.4->google-auth>=2.15.0->google-generativeai) (0.6.1)\n",
+      "Requirement already satisfied: httplib2<1.0.0,>=0.19.0 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-api-python-client->google-generativeai) (0.31.0)\n",
+      "Requirement already satisfied: google-auth-httplib2<1.0.0,>=0.2.0 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-api-python-client->google-generativeai) (0.2.1)\n",
+      "Requirement already satisfied: uritemplate<5,>=3.0.1 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from google-api-python-client->google-generativeai) (4.2.0)\n",
+      "Requirement already satisfied: pyparsing<4,>=3.0.4 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from httplib2<1.0.0,>=0.19.0->google-api-python-client->google-generativeai) (3.2.5)\n",
+      "Requirement already satisfied: annotated-types>=0.6.0 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from pydantic->google-generativeai) (0.7.0)\n",
+      "Requirement already satisfied: pydantic-core==2.41.5 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from pydantic->google-generativeai) (2.41.5)\n",
+      "Requirement already satisfied: typing-inspection>=0.4.2 in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from pydantic->google-generativeai) (0.4.2)\n",
+      "Requirement already satisfied: colorama in c:\\users\\endsem 2025\\appdata\\local\\programs\\python\\python313\\lib\\site-packages (from tqdm->google-generativeai) (0.4.6)\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "[notice] A new release of pip is available: 25.2 -> 25.3\n",
+      "[notice] To update, run: python.exe -m pip install --upgrade pip\n"
+     ]
+    }
+   ],
+   "source": [
+    "pip install google-generativeai"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9fffff08-a39e-42e5-8ed3-d4d6f964c5ce",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "This is Harshini chatbot\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "C:\\Users\\EndSem 2025\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\tqdm\\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html\n",
+      "  from .autonotebook import tqdm as notebook_tqdm\n"
+     ]
+    },
+    {
+     "name": "stdin",
+     "output_type": "stream",
+     "text": [
+      "You:  what is gravity\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Chatbot: Gravity is a fundamental force of nature that causes objects with mass or energy to be attracted to one another. It's what keeps us grounded on Earth, keeps the planets orbiting the Sun, and holds galaxies together.\n",
+      "\n",
+      "Here's a breakdown of key aspects:\n",
+      "\n",
+      "*   **Attraction between objects with mass or energy:** Anything that has mass or energy is subject to gravity. The more massive an object, the stronger its gravitational pull.\n",
+      "\n",
+      "*   **Universal force:** Gravity affects everything in the universe.\n",
+      "\n",
+      "*   **Newton's Law of Universal Gravitation:** This classical law describes gravity as a force proportional to the product of the masses of two objects and inversely proportional to the square of the distance between them. This works well for everyday situations and relatively weak gravitational fields.  Mathematically:\n",
+      "    *   F = Gm₁m₂/r²\n",
+      "    *   Where:\n",
+      "        *   F is the force of gravity\n",
+      "        *   G is the gravitational constant\n",
+      "        *   m₁ and m₂ are the masses of the two objects\n",
+      "        *   r is the distance between the centers of the two objects\n",
+      "\n",
+      "*   **Einstein's Theory of General Relativity:** This is a more modern and accurate description of gravity. It describes gravity not as a force, but as a curvature of spacetime caused by the presence of mass and energy. Objects then move along the curves in spacetime, which we perceive as gravity. Think of a bowling ball placed on a trampoline, creating a dip; objects rolling nearby will be drawn toward the bowling ball.\n",
+      "\n",
+      "**Key implications and effects of Gravity**\n",
+      "\n",
+      "*   **Weight:** Weight is the force of gravity acting on an object's mass.\n",
+      "*   **Orbits:** Gravity is responsible for the orbits of planets around stars, moons around planets, and satellites around Earth.\n",
+      "*   **Tides:** The gravitational pull of the Moon (and to a lesser extent the Sun) causes tides in Earth's oceans.\n",
+      "*   **Formation of stars and galaxies:** Gravity plays a crucial role in the formation of stars and galaxies by drawing matter together.\n",
+      "*   **Time Dilation:** According to General Relativity, gravity can affect the passage of time. Time slows down in stronger gravitational fields.\n",
+      "*   **Black Holes:** Extremely massive objects can collapse under their own gravity to form black holes, where gravity is so strong that nothing, not even light, can escape.\n",
+      "\n",
+      "In simple terms, gravity is the force that makes things fall down and keeps the universe organized.\n",
+      " \n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "import google.generativeai as genai\n",
+    "\n",
+    "genai.configure(api_key=\"AIzaSyC8Mlmql6hAVD1u8iGn-orUUQ72c-mSQrU\")\n",
+    "\n",
+    "model = genai.GenerativeModel(\"gemini-2.0-flash\")\n",
+    "\n",
+    "def chat():\n",
+    "    print(\"This is Harshini chatbot\")\n",
+    "    \n",
+    "    while True:\n",
+    "        user_input = input(\"You: \")\n",
+    "        \n",
+    "        if user_input.lower() == \"exit\":\n",
+    "            print(\"Chatbot: Goodbye!\")\n",
+    "            break\n",
+    "        \n",
+    "        response = model.generate_content(user_input)\n",
+    "        \n",
+    "        print(\"Chatbot:\", response.text, \"\\n\")\n",
+    "\n",
+    "if __name__ == \"__main__\":\n",
+    "    chat()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e3ee676d-f87c-48a2-8854-a80cfd40c4c1",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
